@@ -22,15 +22,21 @@ int main()
 {
     uint64_t diff;
     struct timespec start, end;
-    int i;
-    
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    printf("...");
-    sleep(1);
-    clock_gettime(CLOCK_MONOTONIC, &end);
+    int accumulator = 0;
 
-    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-    printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int)diff);
+    for (int i = 0; i < number_iter; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        printf(" ");
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        
+        diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        accumulator = accumulator + diff;
+    }
+    
+    long long unsigned int average = accumulator / number_iter;
+
+    printf("%llu\n", average);
+    // printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int)diff);
 
     return 0;
 }
