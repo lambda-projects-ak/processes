@@ -20,7 +20,17 @@ and `clock_gettime()` should work just fine.
 
 int main()
 {
-    // Your code here
+    uint64_t diff;
+    struct timespec start, end;
+    int i;
     
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    printf("...");
+    sleep(1);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    printf("Elapsed time = %llu nanoseconds\n", (long long unsigned int)diff);
+
     return 0;
 }
