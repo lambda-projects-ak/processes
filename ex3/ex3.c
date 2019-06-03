@@ -9,7 +9,23 @@
 
 int main(void)
 {
-    // Your code here
+
+    int child = fork();
+
+    if (child < 0)
+    {
+        printf("fork failed\n");
+        exit(1);
+    }
+    if (child == 0)
+    {
+        printf("hello from the child!\n");
+    }
+    else
+    {
+        waitpid(child, NULL, 0);
+        printf("goodbye from the parent!\n");
+    }
 
     return 0;
 }
